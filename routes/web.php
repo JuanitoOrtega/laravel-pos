@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use PHPUnit\TextUI\XmlConfiguration\Group;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ProductoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +26,19 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::prefix('admin')->group(function () {
+Route::middleware(["auth"])->prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
     });
     Route::get('/users', function () {
         return view('admin.users.list');
     });
+
+    // Nuevas rutas
+
+    // admin/categoria
+    Route::resource('/categoria', CategoriaController::class);
+    Route::resource('/producto', ProductoController::class);
+    Route::resource('/cliente', ClienteController::class);
+    Route::resource('/pedido', PedidoController::class);
 });

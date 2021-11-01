@@ -11,6 +11,11 @@
                     <p class="card-text">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga in perspiciatis debitis fugit unde ducimus dolorem labore eius voluptatem voluptate esse voluptates eum odio iusto, quis consequuntur exercitationem error cupiditate.
                     </p>
+                    @auth
+                        Logueado
+                    @else
+                        <a href="#" class="btn btn-primary">Crear usuario</a>
+                    @endauth
                 </div>
             </div>
         </div>

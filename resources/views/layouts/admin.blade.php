@@ -15,6 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+  @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -27,11 +28,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="index3.html" class="nav-link">Inicio</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="#" class="nav-link">Contacto</a>
       </li>
+
     </ul>
 
     <!-- Right navbar links -->
@@ -143,16 +145,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+
+        @auth
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" role="button">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+        </li>
+
+        @endauth
+
+        <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <i class="fas fa-th-large"></i>
+            </a>
+        </li>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -173,7 +189,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+            @auth
+            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+            @endauth
         </div>
       </div>
 
@@ -194,38 +212,117 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Starter Pages
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
+            <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                    Dashboard
+                    </p>
                 </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+            </li>
+
+            <li class="nav-item menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-shopping-basket"></i>
+                <p>
+                    Pedidos
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('pedido.index') }}" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Todos los pedidos</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('pedido.create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nuevo pedido</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+
+            <li class="nav-item menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-cubes"></i>
+                <p>
+                    Productos
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('producto.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Todos los productos</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('producto.create') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Nuevo producto</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('categoria.index') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Categorías</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    Clientes
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('cliente.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Todos los clientes</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('cliente.create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nuevo cliente</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+
+            <li class="nav-item menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-truck"></i>
+                <p>
+                    Proveedores
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Todos los proveedores</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Nuevo proveedor</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -256,7 +353,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-            @yield('container')
+            @yield('contenido')
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
@@ -278,10 +375,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-      Anything you want
+      Haciendo cosas geniales
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> Todos los derechos reservados.
   </footer>
 </div>
 <!-- ./wrapper -->
