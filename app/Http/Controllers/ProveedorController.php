@@ -15,6 +15,8 @@ class ProveedorController extends Controller
     public function index()
     {
         //
+        $lista_proveedores = Proveedor::orderBy('id', 'ASC')->get();
+        return view('admin.proveedor.index', compact('lista_proveedores'));
     }
 
     /**
@@ -24,7 +26,8 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        //
+        $lista_proveedores = Proveedor::all();
+        return view('admin.proveedor.create', compact('lista_proveedores'));
     }
 
     /**
@@ -35,7 +38,21 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validar
+        // Subir imagen
+        // Guardar
+        $proveedor = new Proveedor();
+        $proveedor->nombre = $request->nombre;
+        $proveedor->direccion = $request->direccion;
+        $proveedor->nit = $request->nit;
+        $proveedor->telefono = $request->telefono;
+        $proveedor->email = $request->email;
+        $proveedor->nombre_contacto = $request->nombre_contacto;
+        $proveedor->telefono_contacto = $request->telefono_contacto;
+        $proveedor->save();
+
+        // Redireccionar
+        return redirect()->route('proveedor.index')->with('mensaje', 'Proveedor creado con éxito');
     }
 
     /**
@@ -57,7 +74,8 @@ class ProveedorController extends Controller
      */
     public function edit(Proveedor $proveedor)
     {
-        //
+        $lista_proveedores = Proveedor::all();
+        return view('admin.proveedor.editar', compact('proveedor', 'lista_proveedores'));
     }
 
     /**
@@ -69,7 +87,17 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, Proveedor $proveedor)
     {
-        //
+        $proveedor->nombre = $request->nombre;
+        $proveedor->direccion = $request->direccion;
+        $proveedor->nit = $request->nit;
+        $proveedor->telefono = $request->telefono;
+        $proveedor->email = $request->email;
+        $proveedor->nombre_contacto = $request->nombre_contacto;
+        $proveedor->telefono_contacto = $request->telefono_contacto;
+        $proveedor->save();
+
+        // Redireccionar
+        return redirect()->route('proveedor.index')->with('mensaje', 'Proveedor modificado con éxito');
     }
 
     /**
