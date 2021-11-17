@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\Proveedor;
 
 class ProductoController extends Controller
 {
@@ -16,7 +17,8 @@ class ProductoController extends Controller
     public function index()
     {
         $lista_productos = Producto::orderBy('id', 'ASC')->get();
-        return view('admin.producto.listar', compact('lista_productos'));
+        $lista_proveedores = Proveedor::orderBy('id', 'ASC')->get();
+        return view('admin.producto.listar', compact('lista_productos', 'lista_proveedores'));
     }
 
     /**
@@ -121,4 +123,22 @@ class ProductoController extends Controller
         $producto->delete();
         return redirect()->route('producto.index')->with('mensaje', 'Producto eliminado con éxito');
     }
+
+    public function actualizarProductos(Request $request, $id)
+    {
+        $cantidad = $request->cantidad;
+        $proveedor_id = $request->proveedor;
+
+        // Actualizar stock del producto
+        $producto = Producto::find($id);
+        $producto->stock = $producto->stock + $cantidad;
+        $producto->save();
+
+        // Registrar al proveedor + la cantidad actualizada
+        // N:M
+        $producto->proveedors()->attach($proveedor_id, ['cantidad' => $cantidad]);
+
+        return redirect()->route('producto.index')->with('mensaje', 'Stock actualizado con éxito');
+    }
+
 }

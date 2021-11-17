@@ -11,7 +11,7 @@ npm install && npm run dev
 php artisan migrate
 
 # Para iniciar servidor laravel con host personalizado
-php artisan serve --host=ventas.test --port=80
+sudo php artisan serve --host=ventas.test --port=80
 # Se debe agregar 127.0.0.1 ventas.test en /etc/hosts
 
 # Creamos modelos y controladores
@@ -40,3 +40,14 @@ php artisan make:controller UserController -r
 
 # Para ver lista de rutas, compacto
 php artisan route:list -c
+
+# Actualizar una tabla sin perder datos, creamos primero la migración, añadimos las columnas necesarias
+php artisan make:migration add_logo_to_proveedors_table
+
+# Actualizar una tabla sin perder datos, creamos primero la migración, añadimos las columnas necesarias
+php artisan make:migration add_cantidad_to_producto_proveedor_table
+# Para aplicar las nuevas columnas
+php artisan migrate
+
+# Para revertir migraciones, revirte migraciones hacia atrás 1 a 1
+php artisan migrate:rollback

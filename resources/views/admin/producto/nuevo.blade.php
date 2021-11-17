@@ -16,17 +16,15 @@
 
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
-                                <input type="text" class="form-control" name="nombre" placeholder="Nombre del producto">
+                                <input type="text" class="form-control" name="nombre" placeholder="Nombre del producto" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="categoria_id">Categoría:</label>
-                                    <select class="form-control" name="categoria_id">
-
+                                <label>Categoría:</label>
+                                    <select class="form-control select2" style="width: 100%;">
                                         @foreach ($lista_categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
                                         @endforeach
-
                                     </select>
                             </div>
 

@@ -36,6 +36,7 @@ Route::middleware(["auth"])->prefix('admin')->group(function () {
     });
 
     // Nuevas rutas
+    Route::post('/producto/{id}/actualizar-stock', [ProductoController::class, 'actualizarProductos'])->name('actualizar-stock');
 
     // admin/categoria
     Route::resource('/categoria', CategoriaController::class);

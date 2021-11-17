@@ -40,11 +40,93 @@
                         <td scope="row">{{ $producto->id }}</td>
                         <td>{{ $producto->imagen }}</td>
                         <td>{{ $producto->nombre }}</td>
-                        <td>{{ $producto->categoria_id }}</td>
+                        <td>{{ $producto->categoria->nombre }}</td>
                         <td>{{ $producto->descripcion }}</td>
                         <td>{{ $producto->stock }}</td>
                         <td>{{ $producto->precio }}</td>
                         <td>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalDetalles{{$producto->id}}">
+                                Ver detalles
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalDetalles{{$producto->id}}" data-backdrop="static" data-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Detalles</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{-- {{ $producto->proveedors }} --}}
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Proveedor</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Fecha</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($producto->proveedors as $proveedor)
+                                                    <tr>
+                                                        <td scope="row">{{ $proveedor->id }}</td>
+                                                        <td>{{ $proveedor->nombre }}</td>
+                                                        <td>{{ $proveedor->pivot->cantidad }}</td>
+                                                        <td>{{ $proveedor->pivot->created_at }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#qtyProducts{{$producto->id}}">
+                                Actualizar stock
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="qtyProducts{{$producto->id}}" data-backdrop="static" data-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Stock de productos</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('actualizar-stock', $producto->id) }}" method="POST">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <label for="proveedor">Proveedor:</label>
+                                                <select class="form-control select2" name="proveedor" style="width: 100%;">
+                                                    @foreach ($lista_proveedores as $proveedor)
+                                                    <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="cantidad">Cantidad:</label>
+                                                <input type="number" name="cantidad" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-success">Actualizar cantidad</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <a class="btn btn-warning" href="{{ route('producto.edit', $producto->id) }}" role="button">
                                 <i class="fas fa-edit"></i>
                             </a>

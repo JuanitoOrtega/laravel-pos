@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     use HasFactory;
+
+    public function proveedors()
+    {
+        return $this->belongsToMany(Proveedor::class)->withPivot('cantidad')->withTimestamps();
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
 }
