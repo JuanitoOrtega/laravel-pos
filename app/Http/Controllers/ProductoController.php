@@ -18,7 +18,7 @@ class ProductoController extends Controller
     {
         $lista_productos = Producto::orderBy('id', 'ASC')->get();
         $lista_proveedores = Proveedor::orderBy('id', 'ASC')->get();
-        return view('admin.producto.listar', compact('lista_productos', 'lista_proveedores'));
+        return view('admin.producto.index', compact('lista_productos', 'lista_proveedores'));
     }
 
     /**
