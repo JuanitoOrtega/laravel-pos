@@ -215,17 +215,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ Request::is('admin') ? 'menu-open' : '' }}">
+                    <a href="/admin" class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                        Dashboard
+                            Dashboard
                         </p>
                     </a>
                 </li>
 
-                <li class="nav-item menu-close">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ Request::is('admin/pedido*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/pedido*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-basket"></i>
                         <p>
                             Pedidos
@@ -234,13 +234,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('pedido.index') }}" class="nav-link active">
+                            <a href="{{ route('pedido.index') }}" class="nav-link {{ Request::is('admin/pedido') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Todos los pedidos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('pedido.create') }}" class="nav-link">
+                            <a href="{{ route('pedido.create') }}" class="nav-link {{ Request::is('admin/pedido/create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nuevo pedido</p>
                             </a>
@@ -248,8 +248,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </ul>
                 </li>
 
-                <li class="nav-item menu-close">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ Request::is('admin/producto*') ? 'menu-open' : (Request::is('admin/categoria') ? 'menu-open' : '') }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/producto*') ? 'active' : (Request::is('admin/categoria') ? 'active' : '') }}">
                         <i class="nav-icon fas fa-cubes"></i>
                         <p>
                             Productos
@@ -258,19 +258,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('producto.index') }}" class="nav-link">
+                            <a href="{{ route('producto.index') }}" class="nav-link {{ Request::is('admin/producto') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Todos los productos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('producto.create') }}" class="nav-link">
+                            <a href="{{ route('producto.create') }}" class="nav-link {{ Request::is('admin/producto/create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nuevo producto</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('categoria.index') }}" class="nav-link">
+                            <a href="{{ route('categoria.index') }}" class="nav-link {{ Request::is('admin/categoria') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Categorías</p>
                             </a>
@@ -278,8 +278,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </ul>
                 </li>
 
-                <li class="nav-item menu-close">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ Request::is('admin/cliente*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/cliente*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Clientes
@@ -288,13 +288,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('cliente.index') }}" class="nav-link">
+                            <a href="{{ route('cliente.index') }}" class="nav-link {{ Request::is('admin/cliente') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Todos los clientes</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('cliente.create') }}" class="nav-link">
+                            <a href="{{ route('cliente.create') }}" class="nav-link {{ Request::is('admin/cliente/create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nuevo cliente</p>
                             </a>
@@ -302,8 +302,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </ul>
                 </li>
 
-                <li class="nav-item menu-close">
-                    <a href="#" class="nav-link active">
+                <li class="nav-item {{ Request::is('admin/proveedor*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/proveedor*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-truck"></i>
                         <p>
                             Proveedores
@@ -312,13 +312,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('proveedor.index') }}" class="nav-link active">
+                            <a href="{{ route('proveedor.index') }}" class="nav-link {{ Request::is('admin/proveedor') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Todos los proveedores</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('proveedor.create') }}" class="nav-link">
+                            <a href="{{ route('proveedor.create') }}" class="nav-link {{ Request::is('admin/proveedor/create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nuevo proveedor</p>
                             </a>

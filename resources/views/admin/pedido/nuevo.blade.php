@@ -37,12 +37,21 @@
 
     // carrito
     let carrito = [];
-    // let cliente_id;
+    let cliente_id;
     function adicionarCarrito(prod){
         prod = JSON.parse(prod); // Convierte el string a objeto (JSON)
-
-        let producto = {id: prod.id, nombre: prod.nombre, precio: prod.precio, cantidad: 1};
-        carrito.push(producto);
+        let sw = 0;
+        for (let i = 0; i < carrito.length; i++) {
+            const prod_carrito = carrito[i];
+            if(prod_carrito.id == prod.id){
+                sw = 1;
+                prod_carrito.cantidad = prod_carrito.cantidad + 1
+            }
+        }
+        if(sw == 0){
+            let producto = {id: prod.id, nombre: prod.nombre, precio: prod.precio, cantidad: 1};
+            carrito.push(producto);
+        }
 
         actualizarCarrito();
     }
@@ -61,7 +70,7 @@
                     <button class="btn btn-danger" onclick="quitarCarrito(${i})">x</button>
                 </td>
             </tr>`;
-            total += parseFloat((element.precio * element.cantidad));
+            total += parseFloat(element.precio * element.cantidad);
         }
         total = total.toFixed(2);
         document.getElementById("carrito").innerHTML = html;
@@ -71,6 +80,44 @@
     function quitarCarrito(posicion) {
         carrito.splice(posicion, 1);
         actualizarCarrito();
+    }
+
+    async function buscarCliente() {
+        document.getElementById("buscar").innerHTML = "Buscando...";
+        console.log(document.getElementById("valor").value);
+        let {data} = await axios.get("/api/admin/buscar_cliente");
+        if (Object.keys(data).length === 0) {
+            // document.getElementById("cliente").innerHTML = ""
+            document.getElementById("buscar").innerHTML = "Cliente NO ENCONTRADO";
+        }
+        // } else {
+        //     cliente_id = data.id
+        //     document.getElementById("cliente").innerHTML = data.ci_nit
+        //     document.getElementById("buscar").innerHTML = "ENCONTRADO"
+        // }
+    }
+
+    async function guardarCliente() {
+        nombre = document.getElementById("nombre").value;
+        apellido = document.getElementById("apellido").value;
+        ci = document.getElementById("ci").value;
+        nit = document.getElementById("nit").value;
+        telefono = document.getElementById("telefono").value;
+        correo = document.getElementById("correo").value;
+
+        let datos_cliente = {
+            nombre: nombre,
+            apellido: apellido,
+            ci: ci,
+            nit: nit,
+            telefono: telefono,
+            correo: correo
+        }
+        const {data} = await axios.post("/api/admin/cliente", datos_cliente);
+        console.log(data);
+        document.getElementById("cliente").innerHTML = data.cliente.ci;
+        document.getElementById("buscar").innerHTML = data.mensaje;
+        cliente_id = data.cliente.id;
     }
 </script>
 
@@ -90,7 +137,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Categoría</th>
                                 <th>Stock</th>
@@ -103,7 +149,6 @@
                             @foreach ($lista_productos as $producto)
                             <tr>
                                 <td scope="row">{{ $producto->id }}</td>
-                                <td>{{ $producto->imagen }}</td>
                                 <td>{{ $producto->nombre }}</td>
                                 <td>{{ $producto->categoria->nombre }}</td>
                                 <td>{{ $producto->stock }}</td>
@@ -136,64 +181,87 @@
                         </tbody>
                     </table>
                     <h2>TOTAL: Bs. <span id="total"></span></h2>
-                    <hr>
-
                     <table class="table">
-                    <tr>
-                        <td>
-                        <h5>CI/NIT: <span id="cliente"></span></h5>
-                        <strong><span id="buscar"></span></strong>
-                        </td>
-                    </tr>
                         <tr>
-                        <label for="">Buscar CI o NIT</label>
-                        <td><input type="text" id="valor" class="form-control" placeholder="ci / nit" onkeyup="buscarCliente()"></td>
+                            <td>
+                                <div class="form-group">
+                                    <h5>CI: <span id="cliente"></span></h5>
+                                    <strong><span id="buscar"></span></strong>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
-                        <td>
-
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#Modal">
-                        Nuevo Cliente
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                            <td>
+                                <div class="form-group">
+                                    <label>Buscar CI</label>
+                                    <input type="text" id="valor" class="form-control" placeholder="CI" onkeyup="buscarCliente()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#nuevoCliente">
+                                  Nuevo cliente
                                 </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="nuevoCliente" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Crear nuevo cliente</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="nombre">Nombre:</label>
+                                                            <input type="text" id="nombre" class="form-control" placeholder="Nombre">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="apellido">Apellido:</label>
+                                                            <input type="text" id="apellido" class="form-control" placeholder="Apellido">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="ci">CI:</label>
+                                                            <input type="text" id="ci" class="form-control" placeholder="CI">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="nit">NIT:</label>
+                                                            <input type="text" id="nit" class="form-control" placeholder="NIT">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="telefono">Teléfono:</label>
+                                                    <input type="text" id="telefono" class="form-control" placeholder="Teléfono">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="correo">Correo:</label>
+                                                    <input type="text" id="correo" class="form-control" placeholder="Correo">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary" onclick="guardarCliente()">Guardar cliente</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                <label for="">Nombre Completo</label>
-                                <input type="text" class="form-control" id="nombre_completo">
-                                <label for="">CI / NIT</label>
-                                <input type="text" class="form-control" id="ci_nit">
-                                <label for="">Telefono</label>
-                                <input type="text" class="form-control" id="telefono">
-                                <label for="">Correo</label>
-                                <input type="email" class="form-control" id="correo">
 
-
-
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="guardarCliente()">Guardar Cliente</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                        <button class="btn btn-success btn-block" onclick="realizarPedido()">Realizar Pedido</button>
-                        </td>
+                            </td>
                         </tr>
                     </table>
                 </div>

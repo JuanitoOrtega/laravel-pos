@@ -17,6 +17,12 @@ class ClienteController extends Controller
         //
     }
 
+    public function buscar(Request $request)
+    {
+        $cliente = Cliente::where('ci', 'like', '%'.$request->valor.'%')->first();
+        return response()->json($cliente);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,6 +42,18 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
+        $cliente = new Cliente();
+        $cliente->nombre = $request->nombre;
+        $cliente->apellido = $request->apellido;
+        $cliente->ci = $request->ci;
+        $cliente->nit = $request->nit;
+        $cliente->telefono = $request->telefono;
+        $cliente->correo = $request->correo;
+        $cliente->save();
+        return response()->json([
+            'mensaje' => 'Cliente creado correctamente',
+            'cliente' => $cliente
+        ]);
     }
 
     /**
