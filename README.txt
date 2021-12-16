@@ -41,12 +41,10 @@ php artisan make:controller UserController -r
 # Para ver lista de rutas, compacto
 php artisan route:list -c
 
-# Actualizar una tabla sin perder datos, creamos primero la migración, añadimos las columnas necesarias
+// Actualizar una tabla sin perder datos, creamos primero la migración, añadimos las columnas necesarias
 php artisan make:migration add_logo_to_proveedors_table
-
-# Actualizar una tabla sin perder datos, creamos primero la migración, añadimos las columnas necesarias
-php artisan make:migration add_cantidad_to_producto_proveedor_table
-# Para aplicar las nuevas columnas
+# Creamos las nuevas columnas que necesitamos
+# Luego para aplicar las nuevas columnas, ejecutamos
 php artisan migrate
 
 # Para revertir migraciones, revirte migraciones hacia atrás 1 a 1

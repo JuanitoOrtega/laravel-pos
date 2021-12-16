@@ -2,7 +2,7 @@
 
 @section('titulo', 'Lista de usuarios')
 
-@section('container')
+@section('contenido')
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -12,7 +12,7 @@
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga in perspiciatis debitis fugit unde ducimus dolorem labore eius voluptatem voluptate esse voluptates eum odio iusto, quis consequuntur exercitationem error cupiditate.
                     </p>
                     @auth
-                        Logueado
+                        <p>{{ Auth::user()->email }}</p>
                     @else
                         <a href="#" class="btn btn-primary">Crear usuario</a>
                     @endauth

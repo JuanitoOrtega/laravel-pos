@@ -4,7 +4,7 @@
 
 @section('contenido')
 
-<a class="btn btn-primary" href="" role="button">Nuevo pedido</a>
+<a class="btn btn-primary" href="{{ route('pedido.create') }}" role="button">Nuevo pedido</a>
 
 @if (session('mensaje'))
 
@@ -19,24 +19,68 @@
 
 <div class="card mt-3">
     <div class="card-body">
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Fecha</th>
+                    <th>Nro. Factura</th>
+                    <th>Fecha Factura</th>
                     <th>Usuario</th>
                     <th>Cliente</th>
-                    <th>Detalle</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($pedidos as $pedido)
                 <tr>
                     <td scope="row">{{ $pedido->id }}</td>
-                    <td>2021-11-18</td>
-                    <td>Carlos</td>
-                    <td>Felipe</td>
-                    <td>Hola</td>
+                    <td>{{ $pedido->cod_factura }}</td>
+                    <td>{{ $pedido->fecha }}</td>
+                    <td>{{ $pedido->user->name }}</td>
+                    <td>{{ $pedido->cliente->nombre }} {{ $pedido->cliente->apellido }}</td>
+                    <td>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detallePedido{{$pedido->id}}">
+                            Detalle
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="detallePedido{{$pedido->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detalles del pedido</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <tr>
+                                                <td>ID</td>
+                                                <td>Nombre</td>
+                                                <td>Cantidad</td>
+                                                <td>Precio</td>
+                                                <td>Subtotal</td>
+                                            </tr>
+                                            @foreach ($pedido->productos as $prod)
+                                            <tr>
+                                                <td>{{ $prod->id }}</td>
+                                                <td>{{ $prod->nombre }}</td>
+                                                <td>{{ $prod->pivot->cantidad }}</td>
+                                                <td>{{ $prod->precio }}</td>
+                                                <td>{{ $prod->pivot->cantidad * $prod->precio }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

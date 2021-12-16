@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pedido;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
@@ -39,6 +40,23 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
         //
+        $cliente_id = $request->cliente_id;
+        $user_id = $request->user_id;
+        $productos = $request->productos;
+
+        // guardar el pedido
+        $pedido = new Pedido;
+        $pedido->fecha = date("Y-m-d H:i:s");
+        $pedido->cod_factura = "00012";
+        $pedido->cliente_id = $cliente_id;
+        $pedido->user_id = $user_id;
+        $pedido->save();
+
+        // asignar los productos al pedido
+        foreach ($productos as $producto) {
+            $pedido->productos()->attach($producto["id"], ["cantidad" => $producto["cantidad"]]);
+        }
+        return response()->json(["mensaje" => "Pedido registrado"], 200);
     }
 
     /**

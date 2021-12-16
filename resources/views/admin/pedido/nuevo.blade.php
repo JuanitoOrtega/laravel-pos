@@ -84,17 +84,16 @@
 
     async function buscarCliente() {
         document.getElementById("buscar").innerHTML = "Buscando...";
-        console.log(document.getElementById("valor").value);
-        let {data} = await axios.get("/api/admin/buscar_cliente");
+        let valor = document.getElementById("valor").value;
+        let {data} = await axios.get("/api/admin/buscar_cliente?valor="+valor);
         if (Object.keys(data).length === 0) {
-            // document.getElementById("cliente").innerHTML = ""
+            document.getElementById("cliente").innerHTML = "";
             document.getElementById("buscar").innerHTML = "Cliente NO ENCONTRADO";
+        } else {
+            cliente_id = data.id;
+            document.getElementById("cliente").innerHTML = data.ci;
+            document.getElementById("buscar").innerHTML = "ENCONTRADO";
         }
-        // } else {
-        //     cliente_id = data.id
-        //     document.getElementById("cliente").innerHTML = data.ci_nit
-        //     document.getElementById("buscar").innerHTML = "ENCONTRADO"
-        // }
     }
 
     async function guardarCliente() {
@@ -119,6 +118,17 @@
         document.getElementById("buscar").innerHTML = data.mensaje;
         cliente_id = data.cliente.id;
     }
+
+    async function realizarPedido(){
+        let personal_id = document.getElementById("personal_id").value;
+        let datos = {
+            productos: carrito,
+            cliente_id: cliente_id,
+            user_id: personal_id
+        }
+        const {data} = await axios.post("/api/admin/pedido", datos);
+        console.log(data);
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -133,6 +143,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Lista de productos</h3>
+                    <input type="hidden" id="personal_id" value="{{ Auth::user()->id }}">
                     <table id="tableProducts" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -168,7 +179,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Detalles</h3>
-                    <table class="table table-striped table-hover">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -206,8 +217,8 @@
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="nuevoCliente" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
+                                <div class="modal fade" id="nuevoCliente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Crear nuevo cliente</h5>
@@ -255,12 +266,17 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-primary" onclick="guardarCliente()">Guardar cliente</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="guardarCliente()">Guardar cliente</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn btn-success btn-block" onclick="realizarPedido()">Realizar Pedido</button>
                             </td>
                         </tr>
                     </table>
