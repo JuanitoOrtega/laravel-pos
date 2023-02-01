@@ -21,7 +21,8 @@
 
                             <div class="form-group">
                                 <label>Categoría:</label>
-                                    <select class="form-control select2" style="width: 100%;">
+                                    <select class="form-control select2" name="categoria_id" style="width: 100%;" required>
+                                        <option value="">Seleccione una categoría</option>
                                         @foreach ($lista_categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
                                         @endforeach

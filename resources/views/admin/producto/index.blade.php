@@ -38,7 +38,7 @@
                     @foreach ($lista_productos as $producto)
                     <tr>
                         <td scope="row">{{ $producto->id }}</td>
-                        <td>{{ $producto->imagen }}</td>
+                        <td><img src="{{ $producto->imagen }}" alt="Image de {{ $producto->nombre }}"></td>
                         <td>{{ $producto->nombre }}</td>
                         <td>{{ $producto->categoria->nombre }}</td>
                         <td>{{ $producto->descripcion }}</td>
@@ -110,7 +110,8 @@
                                             @csrf
                                             <div class="modal-body">
                                                 <label for="proveedor">Proveedor:</label>
-                                                <select class="form-control select2" name="proveedor" style="width: 100%;">
+                                                <select class="form-control select2" name="proveedor" style="width: 100%;" required>
+                                                    <option value="">Seleccionar proveedor</option>
                                                     @foreach ($lista_proveedores as $proveedor)
                                                     <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
                                                     @endforeach
