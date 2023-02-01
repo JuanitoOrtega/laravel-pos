@@ -1,0 +1,79 @@
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  During inheritance of JsonSerializable: Uncaught ErrorException: Return type of Laravel\Jetstream\Role::jsonSerialize() should either be compatible with JsonSerializable::jsonSerialize(): mixed, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/jetstream/src/Role.php:70
+Stack trace:
+#0 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/jetstream/src/Role.php(7): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8192, 'Return type of ...', '/Users/jortega/...', 70)
+#1 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/composer/ClassLoader.php(571): include('/Users/jortega/...')
+#2 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/Users/jortega/...')
+#3 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/jetstream/src/Jetstream.php(116): Composer\Autoload\ClassLoader->loadClass('Laravel\\Jetstre...')
+#4 /Users/jortega/Cursos/PHP/Laravel/ventas/app/Providers/JetstreamServiceProvider.php(55): Laravel\Jetstream\Jetstream::role('admin', 'Administrator', Array)
+#5 /Users/jortega/Cursos/PHP/Laravel/ventas/app/Providers/JetstreamServiceProvider.php(34): App\Providers\JetstreamServiceProvider->configurePermissions()
+#6 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\Providers\JetstreamServiceProvider->boot()
+#7 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#8 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\Container\Util::unwrapIfClosure(Object(Closure))
+#9 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#10 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#11 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(914): Illuminate\Container\Container->call(Array)
+#12 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(895): Illuminate\Foundation\Application->bootProvider(Object(App\Providers\JetstreamServiceProvider))
+#13 [internal function]: Illuminate\Foundation\Application->Illuminate\Foundation\{closure}(Object(App\Providers\JetstreamServiceProvider), 29)
+#14 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(896): array_walk(Array, Object(Closure))
+#15 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/BootProviders.php(17): Illuminate\Foundation\Application->boot()
+#16 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\BootProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#17 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(310): Illuminate\Foundation\Application->bootstrapWith(Array)
+#18 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\Foundation\Console\Kernel->bootstrap()
+#19 /Users/jortega/Cursos/PHP/Laravel/ventas/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 {main}
+
+  at vendor/laravel/jetstream/src/Role.php:7
+      3▕ namespace Laravel\Jetstream;
+      4▕ 
+      5▕ use JsonSerializable;
+      6▕ 
+  ➜   7▕ class Role implements JsonSerializable
+      8▕ {
+      9▕     /**
+     10▕      * The key identifier for the role.
+     11▕      *
+
+
+   Whoops\Exception\ErrorException 
+
+  During inheritance of JsonSerializable: Uncaught ErrorException: Return type of Laravel\Jetstream\Role::jsonSerialize() should either be compatible with JsonSerializable::jsonSerialize(): mixed, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/jetstream/src/Role.php:70
+Stack trace:
+#0 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/jetstream/src/Role.php(7): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8192, 'Return type of ...', '/Users/jortega/...', 70)
+#1 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/composer/ClassLoader.php(571): include('/Users/jortega/...')
+#2 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/Users/jortega/...')
+#3 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/jetstream/src/Jetstream.php(116): Composer\Autoload\ClassLoader->loadClass('Laravel\\Jetstre...')
+#4 /Users/jortega/Cursos/PHP/Laravel/ventas/app/Providers/JetstreamServiceProvider.php(55): Laravel\Jetstream\Jetstream::role('admin', 'Administrator', Array)
+#5 /Users/jortega/Cursos/PHP/Laravel/ventas/app/Providers/JetstreamServiceProvider.php(34): App\Providers\JetstreamServiceProvider->configurePermissions()
+#6 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\Providers\JetstreamServiceProvider->boot()
+#7 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+#8 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\Container\Util::unwrapIfClosure(Object(Closure))
+#9 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Array, Object(Closure))
+#10 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), Array, Array, NULL)
+#11 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(914): Illuminate\Container\Container->call(Array)
+#12 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(895): Illuminate\Foundation\Application->bootProvider(Object(App\Providers\JetstreamServiceProvider))
+#13 [internal function]: Illuminate\Foundation\Application->Illuminate\Foundation\{closure}(Object(App\Providers\JetstreamServiceProvider), 29)
+#14 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(896): array_walk(Array, Object(Closure))
+#15 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/BootProviders.php(17): Illuminate\Foundation\Application->boot()
+#16 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\BootProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#17 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(310): Illuminate\Foundation\Application->bootstrapWith(Array)
+#18 /Users/jortega/Cursos/PHP/Laravel/ventas/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\Foundation\Console\Kernel->bootstrap()
+#19 /Users/jortega/Cursos/PHP/Laravel/ventas/artisan(37): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#20 {main}
+
+  at vendor/laravel/jetstream/src/Role.php:7
+      3▕ namespace Laravel\Jetstream;
+      4▕ 
+      5▕ use JsonSerializable;
+      6▕ 
+  ➜   7▕ class Role implements JsonSerializable
+      8▕ {
+      9▕     /**
+     10▕      * The key identifier for the role.
+     11▕      *
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
