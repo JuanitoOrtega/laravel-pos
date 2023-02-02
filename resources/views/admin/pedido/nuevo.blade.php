@@ -127,7 +127,8 @@
             user_id: personal_id
         }
         const {data} = await axios.post("/api/admin/pedido", datos);
-        console.log(data);
+        // console.log(data);
+        window.location.href = '/admin/pedido/';
     }
 </script>
 

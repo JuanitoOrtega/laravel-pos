@@ -39,15 +39,25 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $cliente_id = $request->cliente_id;
         $user_id = $request->user_id;
         $productos = $request->productos;
 
+        // obtener el último código de factura
+        $ultimo_codigo = Pedido::latest('cod_factura')->first();
+        if ($ultimo_codigo) {
+            $cod_factura = (int) substr($ultimo_codigo->cod_factura, 0, 5) + 1;
+        } else {
+            $cod_factura = 1;
+        }
+
+        // formatear el código de factura a 5 dígitos
+        $cod_factura = str_pad($cod_factura, 5, "0", STR_PAD_LEFT);
+
         // guardar el pedido
         $pedido = new Pedido;
         $pedido->fecha = date("Y-m-d H:i:s");
-        $pedido->cod_factura = "00012";
+        $pedido->cod_factura = $cod_factura;
         $pedido->cliente_id = $cliente_id;
         $pedido->user_id = $user_id;
         $pedido->save();

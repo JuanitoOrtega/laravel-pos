@@ -38,7 +38,7 @@
                     @foreach ($lista_productos as $producto)
                     <tr>
                         <td scope="row">{{ $producto->id }}</td>
-                        <td><img src="{{ $producto->imagen }}" alt="Image de {{ $producto->nombre }}"></td>
+                        <td><img src="{{ asset('images/' . $producto->imagen) }}" alt="Image de {{ $producto->nombre }}" width="80"></td>
                         <td>{{ $producto->nombre }}</td>
                         <td>{{ $producto->categoria->nombre }}</td>
                         <td>{{ $producto->descripcion }}</td>
